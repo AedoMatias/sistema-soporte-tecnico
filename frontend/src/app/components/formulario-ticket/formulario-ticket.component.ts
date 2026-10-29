@@ -19,18 +19,20 @@ export class FormularioTicketComponent {
 
   registrarTicket() {
     if (
-      this.asunto.trim() === '' ||
-      this.descripcion.trim() === '' ||
+      this.asunto.trim().length < 3 ||
+      this.descripcion.trim().length < 10 ||
       this.categoria === '' ||
       this.prioridad === ''
     ) {
-      alert('Completa todos los campos del formulario.');
+      alert(
+        'Revisa el formulario: el asunto debe tener al menos 3 caracteres, la descripción al menos 10 y debes seleccionar categoría y prioridad.'
+      );
       return;
     }
 
     const ticket = {
-      asunto: this.asunto,
-      descripcion: this.descripcion,
+      asunto: this.asunto.trim(),
+      descripcion: this.descripcion.trim(),
       categoria: this.categoria,
       prioridad: this.prioridad,
       estado: 'Pendiente'
