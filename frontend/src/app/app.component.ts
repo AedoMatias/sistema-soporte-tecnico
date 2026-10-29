@@ -1,9 +1,10 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CabeceraComponent } from './components/cabecera/cabecera.component';
 import { ListaTicketsComponent } from './components/lista-tickets/lista-tickets.component';
 import { FormularioTicketComponent } from './components/formulario-ticket/formulario-ticket.component';
+import { TicketService } from './services/ticket.service';
 
 @Component({
   selector: 'app-root',
@@ -17,44 +18,39 @@ import { FormularioTicketComponent } from './components/formulario-ticket/formul
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Sistema de Gestión de Soporte Técnico';
 
-  tickets = [
-    {
-      id: 1,
-      asunto: 'Problema con el computador',
-      descripcion: 'El equipo no inicia correctamente',
-      categoria: 'Hardware',
-      prioridad: 'Alta',
-      estado: 'Pendiente'
-    },
-    {
-      id: 2,
-      asunto: 'Instalación de software',
-      descripcion: 'Se necesita instalar un programa',
-      categoria: 'Software',
-      prioridad: 'Media',
-      estado: 'En proceso'
-    },
-    {
-      id: 3,
-      asunto: 'Problema con la impresora',
-      descripcion: 'La impresora no responde',
-      categoria: 'Hardware',
-      prioridad: 'Baja',
-      estado: 'Finalizado'
-    }
-  ];
+  tickets: any[] = [];
+
+  constructor(private ticketService: TicketService) {}
+
+  ngOnInit() {
+    this.cargarTickets();
+  }
+
+  cargarTickets() {
+    this.ticketService.obtenerTickets().subscribe({
+      next: (datos) => {
+        this.tickets = datos;
+      },
+      error: (error) => {
+        console.error('Error al cargar los tickets:', error);
+        alert('No se pudieron cargar los tickets. Revisa si el backend está funcionando.');
+      }
+    });
+  }
 
   agregarTicket(ticket: any) {
-    const nuevoTicket = {
-      id: this.tickets.length > 0
-        ? Math.max(...this.tickets.map(t => t.id)) + 1
-        : 1,
-      ...ticket
-    };
-
-    this.tickets = [...this.tickets, nuevoTicket];
+    this.ticketService.registrarTicket(ticket).subscribe({
+      next: () => {
+        this.cargarTickets();
+        alert('Ticket registrado correctamente.');
+      },
+      error: (error) => {
+        console.error('Error al registrar el ticket:', error);
+        alert('No se pudo registrar el ticket.');
+      }
+    });
   }
 }
