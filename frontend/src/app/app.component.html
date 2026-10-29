@@ -2,13 +2,19 @@
 <app-cabecera></app-cabecera>
 
 <main class="contenedor">
+
   <app-formulario-ticket
-    (ticketCreado)="agregarTicket($event)">
+    [ticketEditar]="ticketEditar"
+    (ticketCreado)="agregarTicket($event)"
+    (edicionCancelada)="cancelarEdicion()">
   </app-formulario-ticket>
 
   <app-lista-tickets
-    [tickets]="tickets">
+    [tickets]="tickets"
+    (ticketSeleccionado)="seleccionarTicket($event)"
+    (ticketEliminado)="eliminarTicket($event)">
   </app-lista-tickets>
+
 </main>
 
 <router-outlet></router-outlet>

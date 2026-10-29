@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   title = 'Sistema de Gestión de Soporte Técnico';
 
   tickets: any[] = [];
+  ticketEditar: any = null;
 
   constructor(private ticketService: TicketService) {}
 
@@ -36,20 +37,55 @@ export class AppComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al cargar los tickets:', error);
-        alert('No se pudieron cargar los tickets. Revisa si el backend está funcionando.');
+        alert('No se pudieron cargar los tickets.');
       }
     });
   }
 
   agregarTicket(ticket: any) {
-    this.ticketService.registrarTicket(ticket).subscribe({
+    if (this.ticketEditar) {
+      this.ticketService.actualizarTicket(this.ticketEditar.id, ticket).subscribe({
+        next: () => {
+          alert('Ticket actualizado correctamente.');
+          this.ticketEditar = null;
+          this.cargarTickets();
+        },
+        error: (error) => {
+          console.error('Error al actualizar el ticket:', error);
+          alert('No se pudo actualizar el ticket.');
+        }
+      });
+    } else {
+      this.ticketService.registrarTicket(ticket).subscribe({
+        next: () => {
+          alert('Ticket registrado correctamente.');
+          this.cargarTickets();
+        },
+        error: (error) => {
+          console.error('Error al registrar el ticket:', error);
+          alert('No se pudo registrar el ticket.');
+        }
+      });
+    }
+  }
+
+  seleccionarTicket(ticket: any) {
+    this.ticketEditar = ticket;
+  }
+
+  cancelarEdicion() {
+    this.ticketEditar = null;
+  }
+
+  eliminarTicket(id: number) {
+    this.ticketService.eliminarTicket(id).subscribe({
       next: () => {
+        alert('Ticket eliminado correctamente.');
         this.cargarTickets();
-        alert('Ticket registrado correctamente.');
       },
       error: (error) => {
-        console.error('Error al registrar el ticket:', error);
-        alert('No se pudo registrar el ticket.');
+        console.error('Error al eliminar el ticket:', error);
+        alert('No se pudo eliminar el ticket.');
       }
     });
   }

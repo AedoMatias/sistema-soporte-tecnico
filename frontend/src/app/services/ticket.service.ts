@@ -18,4 +18,12 @@ export class TicketService {
   registrarTicket(ticket: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, ticket);
   }
+
+  actualizarTicket(id: number, ticket: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, ticket);
+  }
+
+  eliminarTicket(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
 }

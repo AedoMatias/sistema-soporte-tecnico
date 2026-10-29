@@ -1,0 +1,16 @@
+
+# Dependencias
+node_modules/
+
+# Configuración privada
+.env
+.env.*
+!.env.example
+
+# Archivos generados por Angular
+dist/
+.angular/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

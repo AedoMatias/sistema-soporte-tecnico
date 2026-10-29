@@ -8,9 +8,12 @@
         <tr>
           <th>N.º</th>
           <th>Asunto</th>
+          <th>Solicitante</th>
           <th>Descripción</th>
+          <th>Categoría</th>
           <th>Prioridad</th>
           <th>Estado</th>
+          <th>Acciones</th>
         </tr>
       </thead>
 
@@ -19,13 +22,32 @@
           <tr>
             <td>{{ ticket.id }}</td>
             <td>{{ ticket.asunto }}</td>
+            <td>{{ ticket.solicitante }}</td>
             <td>{{ ticket.descripcion }}</td>
+            <td>{{ ticket.categoria }}</td>
+
             <td>
-              <span class="prioridad" [class]="ticket.prioridad.toLowerCase()">
+              <span class="prioridad"
+                [class]="ticket.prioridad.toLowerCase()">
                 {{ ticket.prioridad }}
               </span>
             </td>
+
             <td>{{ ticket.estado }}</td>
+
+            <td>
+              <button type="button" (click)="editarTicket(ticket)">
+                Editar
+              </button>
+
+              <button type="button" (click)="eliminarTicket(ticket.id)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8">No hay tickets registrados.</td>
           </tr>
         }
       </tbody>

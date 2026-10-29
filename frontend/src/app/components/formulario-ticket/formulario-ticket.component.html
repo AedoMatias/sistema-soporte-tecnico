@@ -1,8 +1,9 @@
 
 <section class="formulario">
-  <h2>Registrar ticket</h2>
+  <h2>{{ ticketEditar ? 'Editar ticket' : 'Registrar ticket de soporte' }}</h2>
 
   <form (ngSubmit)="registrarTicket()">
+
     <div class="campo">
       <label for="asunto">Asunto</label>
       <input
@@ -10,9 +11,19 @@
         id="asunto"
         name="asunto"
         [(ngModel)]="asunto"
-        placeholder="Ej: Problema con el computador"
         required
-      >
+      />
+    </div>
+
+    <div class="campo">
+      <label for="solicitante">Solicitante</label>
+      <input
+        type="text"
+        id="solicitante"
+        name="solicitante"
+        [(ngModel)]="solicitante"
+        required
+      />
     </div>
 
     <div class="campo">
@@ -21,8 +32,6 @@
         id="descripcion"
         name="descripcion"
         [(ngModel)]="descripcion"
-        rows="3"
-        placeholder="Describe el problema"
         required
       ></textarea>
     </div>
@@ -35,7 +44,7 @@
         [(ngModel)]="categoria"
         required
       >
-        <option value="">Seleccionar categoría</option>
+        <option value="">Selecciona una categoría</option>
         <option value="Hardware">Hardware</option>
         <option value="Software">Software</option>
         <option value="Redes">Redes</option>
@@ -51,13 +60,41 @@
         [(ngModel)]="prioridad"
         required
       >
-        <option value="">Seleccionar prioridad</option>
+        <option value="">Selecciona una prioridad</option>
         <option value="Alta">Alta</option>
         <option value="Media">Media</option>
         <option value="Baja">Baja</option>
       </select>
     </div>
 
-    <button type="submit">Registrar ticket</button>
+    <div class="campo" *ngIf="ticketEditar">
+      <label for="estado">Estado</label>
+      <select
+        id="estado"
+        name="estado"
+        [(ngModel)]="estado"
+      >
+        <option value="Pendiente">Pendiente</option>
+        <option value="En proceso">En proceso</option>
+        <option value="Finalizado">Finalizado</option>
+      </select>
+    </div>
+
+    <p *ngIf="mensaje" class="mensaje-error">
+      {{ mensaje }}
+    </p>
+
+    <button type="submit">
+      {{ ticketEditar ? 'Guardar cambios' : 'Registrar ticket' }}
+    </button>
+
+    <button
+      *ngIf="ticketEditar"
+      type="button"
+      (click)="cancelarEdicion()"
+    >
+      Cancelar
+    </button>
+
   </form>
 </section>
