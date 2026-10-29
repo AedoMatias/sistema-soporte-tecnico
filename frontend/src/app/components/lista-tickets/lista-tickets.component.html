@@ -1,0 +1,34 @@
+
+<section class="seccion-tickets">
+  <h2>Tickets registrados</h2>
+
+  <div class="tabla-contenedor">
+    <table>
+      <thead>
+        <tr>
+          <th>N.º</th>
+          <th>Asunto</th>
+          <th>Descripción</th>
+          <th>Prioridad</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (ticket of tickets; track ticket.id) {
+          <tr>
+            <td>{{ ticket.id }}</td>
+            <td>{{ ticket.asunto }}</td>
+            <td>{{ ticket.descripcion }}</td>
+            <td>
+              <span class="prioridad" [class]="ticket.prioridad.toLowerCase()">
+                {{ ticket.prioridad }}
+              </span>
+            </td>
+            <td>{{ ticket.estado }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

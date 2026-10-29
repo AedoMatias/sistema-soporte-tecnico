@@ -1,0 +1,63 @@
+
+<section class="formulario">
+  <h2>Registrar ticket</h2>
+
+  <form (ngSubmit)="registrarTicket()">
+    <div class="campo">
+      <label for="asunto">Asunto</label>
+      <input
+        type="text"
+        id="asunto"
+        name="asunto"
+        [(ngModel)]="asunto"
+        placeholder="Ej: Problema con el computador"
+        required
+      >
+    </div>
+
+    <div class="campo">
+      <label for="descripcion">Descripción</label>
+      <textarea
+        id="descripcion"
+        name="descripcion"
+        [(ngModel)]="descripcion"
+        rows="3"
+        placeholder="Describe el problema"
+        required
+      ></textarea>
+    </div>
+
+    <div class="campo">
+      <label for="categoria">Categoría</label>
+      <select
+        id="categoria"
+        name="categoria"
+        [(ngModel)]="categoria"
+        required
+      >
+        <option value="">Seleccionar categoría</option>
+        <option value="Hardware">Hardware</option>
+        <option value="Software">Software</option>
+        <option value="Redes">Redes</option>
+        <option value="Otro">Otro</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="prioridad">Prioridad</label>
+      <select
+        id="prioridad"
+        name="prioridad"
+        [(ngModel)]="prioridad"
+        required
+      >
+        <option value="">Seleccionar prioridad</option>
+        <option value="Alta">Alta</option>
+        <option value="Media">Media</option>
+        <option value="Baja">Baja</option>
+      </select>
+    </div>
+
+    <button type="submit">Registrar ticket</button>
+  </form>
+</section>

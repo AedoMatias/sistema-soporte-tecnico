@@ -1,0 +1,14 @@
+
+<app-cabecera></app-cabecera>
+
+<main class="contenedor">
+  <app-formulario-ticket
+    (ticketCreado)="agregarTicket($event)">
+  </app-formulario-ticket>
+
+  <app-lista-tickets
+    [tickets]="tickets">
+  </app-lista-tickets>
+</main>
+
+<router-outlet></router-outlet>
